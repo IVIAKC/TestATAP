@@ -2,9 +2,7 @@ package com.company;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class Main {
 
@@ -13,21 +11,28 @@ public class Main {
     private static int distans = 1000;
 
     static ArrayList<TC> list = new ArrayList<TC>();
-
+    static ArrayList<TC> table = new ArrayList<TC>();
     public static void main(String[] args) throws IOException {
 
         loadProp();
-        int stepNum=0;
         while(go){
-            stepNum++;
             go=false;
-            System.out.println("\nStep num = "+stepNum +"");
-
             for(int i=0;i<list.size();i++){
-                if(list.get(i).Step(distans))
-                    go=true;
+                if(list.get(i).Step(distans)) {
+
+                    go = true;
+                }else {
+                    table.add(list.get(i));
+                    list.remove(i);
+                }
             }
         }
+        System.out.println();
+        for (int i=0;i<table.size();i++){
+            System.out.println(table.get(i).getName());
+        }
+
+
 
     }
     public static void loadProp(){

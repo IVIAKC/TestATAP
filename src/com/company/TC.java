@@ -13,47 +13,32 @@ public class TC {
     private int load; //груз
     private int speed; // Скорость
     private int repair; //время ремонта
-    private boolean go=false;//движется ли ТС
     private int dist=0;//пройденная дистанцияы
     private Random random = new Random();
+    private boolean finish = false;
 
-    public static int getStep() {
-        return step;
-    }
 
-    public static void setStep(int step) {
-        TC.step = step;
-    }
 
-    private static int step=-1;
     public void getSett(){
         System.out.println("Hi, my name "+getName());
         System.out.println("    My speed = " + getSpeed());
         System.out.println("    My prick = " + getPrick());
     }
     public boolean  Step(int distans){
-        if(distans<=dist){
 
+
+        if(distans<=getDist()){
             return false;
         }else {
-            setStep(getStep()+1);
-            
-            int ran;
-            ran = Math.abs(random.nextInt()%100);
-
-
-            if(ran<=getPrick()){
-                go = false;
+            if(Math.abs(random.nextInt()%100)<=getPrick()){
                 System.out.println("    "+getName()+" repair ");
             }else {
-                go = true;
-            }
-            if(distans>dist && go){
                 dist+=speed;
                 System.out.println("    "+getName()+" distants = "+ getDist());
             }
             return true;
         }
+
     }
 
     public String getName() {
@@ -104,14 +89,6 @@ public class TC {
         this.repair = repair;
     }
 
-    public boolean isGo() {
-        return go;
-    }
-
-    public void setGo(boolean go) {
-        this.go = go;
-    }
-
     public int getDist() {
         return dist;
     }
@@ -119,4 +96,14 @@ public class TC {
     public void setDist(int dist) {
         this.dist = dist;
     }
+
+
+    public boolean isFinish() {
+        return finish;
+    }
+
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
 }
