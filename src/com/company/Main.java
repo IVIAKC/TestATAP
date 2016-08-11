@@ -1,7 +1,9 @@
 package com.company;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
@@ -11,11 +13,50 @@ public class Main {
     private static int distans = 1000;
 
     static ArrayList<TC> list = new ArrayList<TC>();
+    static ArrayList<TC> listBack = new ArrayList<TC>();
     static String table="";
     public static void main(String[] args) throws IOException {
+        BufferedReader readConsole = new BufferedReader(new InputStreamReader(System.in));
+        while(true) {
+            System.out.println("1)Start");
+            System.out.println("2)Restart race.");
+            System.out.println("3)Reload propertis.");
+            int someNumber = 0;
+            try {
+                System.out.println("Enter number!");
+                someNumber = Integer.valueOf(readConsole.readLine());
 
-        loadProp();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+            switch (someNumber) {
 
+                case 1://Загружать + старт
+                    System.out.println("1");
+                    loadProp();
+                    start();
+                    break;
+                case 2://перезапуск гонки
+                    System.out.println("2");
+                    list.clear();
+                    for (int i =0;i<listBack.size();i++){
+                        list.add(listBack.get(i));
+                    }
+                    start();
+                    break;
+                case 3://перезагрузка параметр
+                    System.out.println("3");
+                    loadProp();
+                    break;
+            }
+        }
+
+    }
+    public static void start(){
+        System.out.println("Statring");
+        table="";
+        int pos=1;
+        go=true;
         while(go){
             System.out.println();
             go=false;
@@ -24,13 +65,15 @@ public class Main {
 
                     go = true;
                 }else {
-                    table += list.get(i).getName()+"\n";
+                    table += pos+")"+list.get(i).getName()+"\n";
                     list.remove(i);
+                    pos++;
                 }
             }
-
         }
+        System.out.println("-----TABLE WIN-----");
         System.out.println(table);
+        System.out.println("-------------------");
     }
     public static void loadProp(){
         try {
@@ -41,6 +84,7 @@ public class Main {
             //Как-то по другому делать!
             //Хотя вроде норм.
             //Можно переделать структуру конфига для простоты получения данных через 1-н цикл c ифами.
+            //Mot = parametrs кратное 5 и усе
             if(debug) System.out.println("1");
             for(int i=0;i<numMot;i++){
                 String[] propMot = properties.getProperty("Mot"+(i+1)).split(";");
@@ -63,6 +107,9 @@ public class Main {
             //-----
         }catch (Exception e){//Можно расширить.
             System.out.println(e);
+        }
+        for (int i=0;i<list.size();i++){//делаем бэк для перезапуска гонки
+            listBack.add(list.get(i));
         }
     }
 }
