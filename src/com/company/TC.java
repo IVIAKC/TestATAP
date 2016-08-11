@@ -16,6 +16,16 @@ public class TC {
     private boolean go=false;//движется ли ТС
     private int dist=0;//пройденная дистанцияы
     private Random random = new Random();
+
+    public static int getStep() {
+        return step;
+    }
+
+    public static void setStep(int step) {
+        TC.step = step;
+    }
+
+    private static int step=-1;
     public void getSett(){
         System.out.println("Hi, my name "+getName());
         System.out.println("    My speed = " + getSpeed());
@@ -23,24 +33,27 @@ public class TC {
     }
     public boolean  Step(int distans){
         if(distans<=dist){
+
             return false;
-        }
-
-        int ran;
-
-        ran = Math.abs(random.nextInt()%100);
-        //System.out.println("Random = " + ran + " Prick = "+getPrick());
-        if(ran<=getPrick()){
-            go = false;
-            System.out.println("    "+getName()+" repair ");
         }else {
-            go = true;
+            setStep(getStep()+1);
+            
+            int ran;
+            ran = Math.abs(random.nextInt()%100);
+
+
+            if(ran<=getPrick()){
+                go = false;
+                System.out.println("    "+getName()+" repair ");
+            }else {
+                go = true;
+            }
+            if(distans>dist && go){
+                dist+=speed;
+                System.out.println("    "+getName()+" distants = "+ getDist());
+            }
+            return true;
         }
-        if(distans>dist && go){
-            dist+=speed;
-            System.out.println("    "+getName()+" distants = "+ getDist());
-        }
-        return true;
     }
 
     public String getName() {
