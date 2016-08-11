@@ -1,27 +1,46 @@
 package com.company;
 
+
+import java.util.Random;
+
 /**
  * Created by IVIAKC on 11.08.2016.
  */
 public class TC {
     String name="name";
-    int numWheels; //кол-во колес
-    int prick; //вероятность прокола
-    int load; //груз
-    int speed; // Скорость
-    int repair; //время ремонта
-    boolean go=false;//движется ли ТС
-    int dist=0;//пройденная дистанцияы
-
-    public TC() {
-
-    }
+    private int numWheels; //кол-во колес
+    private int prick; //вероятность прокола
+    private int load; //груз
+    private int speed; // Скорость
+    private int repair; //время ремонта
+    private boolean go=false;//движется ли ТС
+    private int dist=0;//пройденная дистанцияы
+    private Random random = new Random();
     public void getSett(){
-
         System.out.println("Hi, my name "+getName());
         System.out.println("    My speed = " + getSpeed());
         System.out.println("    My prick = " + getPrick());
+    }
+    public boolean  Step(int distans){
+        if(distans<=dist){
+            return false;
+        }
 
+        int ran;
+
+        ran = Math.abs(random.nextInt()%100);
+        //System.out.println("Random = " + ran + " Prick = "+getPrick());
+        if(ran<=getPrick()){
+            go = false;
+            System.out.println("    "+getName()+" repair ");
+        }else {
+            go = true;
+        }
+        if(distans>dist && go){
+            dist+=speed;
+            System.out.println("    "+getName()+" distants = "+ getDist());
+        }
+        return true;
     }
 
     public String getName() {

@@ -9,8 +9,7 @@ public class Main {
 
     private static boolean debug = true;
     private static boolean go=true;
-
-    private int distans = 100;
+    private static int distans = 1000;
 
 
     static ArrayList<Mot> listMot = new ArrayList<Mot>();
@@ -20,10 +19,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         loadProp();
-
+        int stepNum=0;
         while(go){
-            System.out.println("Go to road!!!");
+            stepNum++;
+            System.out.println();
+            System.out.println("Step num = "+stepNum +"");
+
             go=false;
+            for(int i=0;i<listCar.size();i++){
+                if(listCar.get(i).Step(distans))
+                    go=true;
+
+
+            }
+            for(int i=0;i<listMot.size();i++){
+                if(listMot.get(i).Step(distans))
+                    go=true;
+
+            }
+            for(int i=0;i<listTruck.size();i++){
+                if(listTruck.get(i).Step(distans))
+                    go=true;
+            }
         }
 
     }
