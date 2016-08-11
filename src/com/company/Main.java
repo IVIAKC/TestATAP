@@ -11,29 +11,26 @@ public class Main {
     private static int distans = 1000;
 
     static ArrayList<TC> list = new ArrayList<TC>();
-    static ArrayList<TC> table = new ArrayList<TC>();
+    static String table="";
     public static void main(String[] args) throws IOException {
 
         loadProp();
+
         while(go){
+            System.out.println();
             go=false;
-            for(int i=0;i<list.size();i++){
+            for(int i=list.size()-1;i>=0;i--){
                 if(list.get(i).Step(distans)) {
 
                     go = true;
                 }else {
-                    table.add(list.get(i));
+                    table += list.get(i).getName()+"\n";
                     list.remove(i);
                 }
             }
+
         }
-        System.out.println();
-        for (int i=0;i<table.size();i++){
-            System.out.println(table.get(i).getName());
-        }
-
-
-
+        System.out.println(table);
     }
     public static void loadProp(){
         try {
@@ -43,7 +40,7 @@ public class Main {
 
             //Как-то по другому делать!
             //Хотя вроде норм.
-            //Можно переделать структуру конфига для простоты получения данных через 1-н цикл.
+            //Можно переделать структуру конфига для простоты получения данных через 1-н цикл c ифами.
             if(debug) System.out.println("1");
             for(int i=0;i<numMot;i++){
                 String[] propMot = properties.getProperty("Mot"+(i+1)).split(";");

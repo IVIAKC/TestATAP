@@ -14,9 +14,8 @@ public class TC {
     private int speed; // Скорость
     private int repair; //время ремонта
     private int dist=0;//пройденная дистанцияы
+    private int drive=0;
     private Random random = new Random();
-    private boolean finish = false;
-
 
 
     public void getSett(){
@@ -30,11 +29,17 @@ public class TC {
         if(distans<=getDist()){
             return false;
         }else {
-            if(Math.abs(random.nextInt()%100)<=getPrick()){
-                System.out.println("    "+getName()+" repair ");
+            if(drive==0) {
+                if (Math.abs(random.nextInt() % 100) <= getPrick()) {
+                    System.out.println("    " + getName() + " repair ");
+                    drive+=repair;
+                } else {
+                    dist += speed;
+                    System.out.println("    " + getName() + " distants = " + getDist());
+                }
             }else {
-                dist+=speed;
-                System.out.println("    "+getName()+" distants = "+ getDist());
+                drive--;
+                System.out.println("    " + getName() + " repair ");
             }
             return true;
         }
@@ -81,9 +86,6 @@ public class TC {
         this.speed = speed;
     }
 
-    public int getRepair() {
-        return repair;
-    }
 
     public void setRepair(int repair) {
         this.repair = repair;
@@ -93,17 +95,5 @@ public class TC {
         return dist;
     }
 
-    public void setDist(int dist) {
-        this.dist = dist;
-    }
-
-
-    public boolean isFinish() {
-        return finish;
-    }
-
-    public void setFinish(boolean finish) {
-        this.finish = finish;
-    }
 
 }
