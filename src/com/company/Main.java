@@ -14,39 +14,37 @@ public class Main {
 
     static ArrayList<TC> list = new ArrayList<TC>();
     static ArrayList<TC> listBack = new ArrayList<TC>();
-    static String table="";
     public static void main(String[] args) throws IOException {
         BufferedReader readConsole = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
             System.out.println("1)Start");
             System.out.println("2)Restart race.");
-            System.out.println("3)Reload propertis.");
-            int someNumber = 0;
+            String someNumber = "";
             try {
                 System.out.println("Enter number!");
-                someNumber = Integer.valueOf(readConsole.readLine());
+                someNumber = readConsole.readLine();
 
             } catch (IOException e) {
                 System.out.println(e);
             }
             switch (someNumber) {
 
-                case 1://Загружать + старт
+                case "1"://Загружать + старт
                     System.out.println("1");
                     loadProp();
                     start();
                     break;
-                case 2://перезапуск гонки
+                case "2"://перезапуск гонки
                     System.out.println("2");
                     list.clear();
                     for (int i =0;i<listBack.size();i++){
                         list.add(listBack.get(i));
+                        list.get(i).setDist(0);
                     }
                     start();
                     break;
-                case 3://перезагрузка параметр
-                    System.out.println("3");
-                    loadProp();
+                default:
+                    System.out.println("Введите правильно цифру");
                     break;
             }
         }
@@ -54,7 +52,7 @@ public class Main {
     }
     public static void start(){
         System.out.println("Statring");
-        table="";
+        String table="";
         int pos=1;
         go=true;
         while(go){
@@ -76,6 +74,7 @@ public class Main {
         System.out.println("-------------------");
     }
     public static void loadProp(){
+        list.clear();
         try {
             Properties properties = new Properties();
             properties.load(new FileInputStream("config/example.ini"));
@@ -108,6 +107,7 @@ public class Main {
         }catch (Exception e){//Можно расширить.
             System.out.println(e);
         }
+        listBack.clear();
         for (int i=0;i<list.size();i++){//делаем бэк для перезапуска гонки
             listBack.add(list.get(i));
         }
