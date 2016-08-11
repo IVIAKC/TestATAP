@@ -7,16 +7,14 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-
-    private static boolean debug = true;
-    private static boolean go=true;
-    private static int distans = 1000;
+    private static int distans;
 
     static ArrayList<TC> list = new ArrayList<TC>();
     static ArrayList<TC> listBack = new ArrayList<TC>();
     public static void main(String[] args) throws IOException {
         BufferedReader readConsole = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
+            System.out.println("");
             System.out.println("1)Start");
             System.out.println("2)Restart race.");
             String someNumber = "";
@@ -30,12 +28,10 @@ public class Main {
             switch (someNumber) {
 
                 case "1"://Загружать + старт
-                    System.out.println("1");
                     loadProp();
                     start();
                     break;
                 case "2"://перезапуск гонки
-                    System.out.println("2");
                     list.clear();
                     for (int i =0;i<listBack.size();i++){
                         list.add(listBack.get(i));
@@ -44,17 +40,17 @@ public class Main {
                     start();
                     break;
                 default:
-                    System.out.println("Введите правильно цифру");
+                    System.out.println("Enter the correct number");
                     break;
             }
         }
 
     }
     public static void start(){
-        System.out.println("Statring");
+
         String table="";
         int pos=1;
-        go=true;
+        boolean go=true;
         while(go){
             System.out.println();
             go=false;
@@ -79,25 +75,26 @@ public class Main {
             Properties properties = new Properties();
             properties.load(new FileInputStream("config/example.ini"));
             int numMot = Integer.valueOf(properties.getProperty("Mot"));
-
+            distans = Integer.valueOf(properties.getProperty("Distance"));
             //Как-то по другому делать!
             //Хотя вроде норм.
             //Можно переделать структуру конфига для простоты получения данных через 1-н цикл c ифами.
             //Mot = parametrs кратное 5 и усе
-            if(debug) System.out.println("1");
+            //Хотя смотря как будет быстрее...
+
             for(int i=0;i<numMot;i++){
                 String[] propMot = properties.getProperty("Mot"+(i+1)).split(";");
                 list.add(new Mot(i+1,Integer.valueOf(propMot[0]),Integer.valueOf(propMot[1]),Integer.valueOf(propMot[2]),Integer.valueOf(propMot[3]),Integer.valueOf(propMot[4])));
             }
 
-            if(debug) System.out.println("2");
+
             int numCar = Integer.valueOf(properties.getProperty("Car"));
             for(int i=0;i<numCar;i++){
                 String[] propCar = properties.getProperty("Car"+(i+1)).split(";");
                 list.add(new Car(i+1,Integer.valueOf(propCar[0]),Integer.valueOf(propCar[1]),Integer.valueOf(propCar[2]),Integer.valueOf(propCar[3]),Integer.valueOf(propCar[4])));
             }
 
-            if(debug) System.out.println("3");
+
             int numTruck = Integer.valueOf(properties.getProperty("Truck"));
             for(int i =0;i<numTruck;i++){
                 String[] propTruck = properties.getProperty("Truck"+(i+1)).split(";");

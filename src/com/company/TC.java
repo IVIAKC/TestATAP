@@ -24,7 +24,6 @@ public class TC {
         System.out.println("    My prick = " + getPrick());
     }
     public boolean  Step(int distans){
-        System.out.println(getDist());
         if(distans<=getDist()){
             return false;
         }else {
